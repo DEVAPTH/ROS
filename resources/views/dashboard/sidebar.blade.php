@@ -44,13 +44,13 @@
             </a> --}}
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="/dish" class="nav-link {{Request::segment(1)=='dish' ? 'active':''}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Dishes</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="/order" class="nav-link {{Request::segment(1)=='order' ? 'active':''}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Orders</p>
                 </a>

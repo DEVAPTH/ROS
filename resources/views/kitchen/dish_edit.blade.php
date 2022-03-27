@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label for="image" class="control-label">Photo Upload</label>
-                    <input type="file" name="image" class="form-control">
+                    <input type="file" name="image" class="form-control"><br>
                     <img src="{{asset('uploads/'.$dishes->image)}}" alt="" width="100px" height="100px">
                 </div>
 

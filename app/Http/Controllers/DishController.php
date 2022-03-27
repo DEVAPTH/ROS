@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Dish;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class DishController extends Controller
@@ -107,5 +108,37 @@ class DishController extends Controller
         $dishes=Dish::findOrFail($id);
         $dishes->delete();
         return redirect('dish')->with('status','Successfull Delete Data From Dishes Table');
+    }
+
+
+    public function order()
+    {
+        $rawstatus = config('res.order_status');
+        $status = array_flip($rawstatus);
+        $orders = Order::whereIn('status',[1,2,3])->get();
+        return view('kitchen.order',compact('orders','status'));
+    }
+
+    public function approve(Order $order)
+    {
+        $order->status = config('res.order_status.processing');
+        $order->save();
+
+        return redirect('/order')->with('status','Order Approve Successfull');
+    }
+    public function cancel(Order $order)
+    {
+        dd($order);
+
+        $order->status = config('res.order_status.cancel');
+        $order->save();
+        return redirect('/order')->with('status','Order Cancel Successfull');
+
+    }
+    public function ready(Order $order)
+    {
+        $order->status = config('res.order_status.ready');
+        $order->save();
+        return redirect('/order')->with('status','Order Ready Successfull');
     }
 }

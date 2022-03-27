@@ -1,43 +1,85 @@
 @extends('layouts.master')
 
 @section('content')
-<div class="content">
-    <div class="container-fluid">
-      <div class="row">
-        <!-- /.col-md-6 -->
-        <div class="col-lg-8">
-            <div class="card card-primary card-outline">
-            <div class="card-header">
-              <h5 class="m-0">Featured</h5>
-              <a href="" class="btn btn-success btn-sn float-right">Create</a>
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Order Table</h3>
+                        </div>
+
+                        <div class="card-body">
+                            @if (session('status'))
+                                <div class="alert alert-success">
+                                    {{ session('status') }}
+                                </div>
+                            @endif
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Dish Name</th>
+                                        <th>Table Number</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($orders as $order)
+                                        <tr>
+                                            <td>{{ $order->id }}</td>
+                                            <td>{{ $order->dish_id }}</td>
+                                            <td>{{ $order->table_id }}</td>
+                                            <td>{{$status[$order->status]}}</td>
+                                            <td>
+                                                <a href="/order/{{ $order->id }}/approve"
+                                                    class="btn btn-warning">Approce</a>
+                                                <a href="/order/{{ $order->id }}/cancel"
+                                                    class="btn btn-danger">Cancel</a>
+                                                <a href="/order/{{ $order->id }}/ready" class="btn btn-success">Ready</a>
+
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
-            <div class="card-body">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <td>No</td>
-                            <td>Name</td>
-                            <td>Category</td>
-                            <td>Action</td>
-                        </tr>
-                    </thead>
-                   <tbody>
-                       <tr>
-                           <td>1</td>
-                           <td>Food</td>
-                           <td>Noddle</td>
-                           <td>
-                               <a href="" class="btn btn-danger btn-sn">Delete</a>
-                           </td>
-                       </tr>
-                   </tbody>
-                </table>
-            </div>
-          </div>
+
         </div>
-        <!-- /.col-md-6 -->
-      </div>
-      <!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
+
+    </section>
+@endsection
+
+
+@section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+    <script>
+        $(function() {
+            $("#example1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            $('#example2').DataTable({
+                "paging": true,
+                "pageLength": 6,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            });
+        });
+    </script>
 @endsection

@@ -16,9 +16,11 @@ use App\Http\Controllers\OrderController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+
+Route::get('/',[OrderController::class,'index'])->name('order.form');
+Route::post('order_submit',[OrderController::class,'submit'])->name('order.submit');
 
 Auth::routes();
 
@@ -30,6 +32,15 @@ Route::post('dish/create',[DishController::class,'store']);
 Route::get('dish/{id}/edit',[DishController::class,'edit'])->name('dish.edit');
 Route::put('dish/{id}',[DishController::class,'update'])->name('dish.update');
 Route::delete('dish/{id}',[DishController::class,'destroy']);
+
+Route::get('order',[DishController::class,'order'])->name('kitche.order');
+Route::get('order/{order}/approve',[DishController::class,'approve']);
+Route::get('order/{order}cancel',[DishController::class,'cancel']);
+Route::get('order/{order}ready',[DishController::class,'ready']);
+Route::get('order/{order}done',[DishController::class,'done']);
+
+
+
 
 
 
